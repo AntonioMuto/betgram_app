@@ -1,15 +1,18 @@
 class GoalEvent {
-  final String reactKey;
-  final int time;
-  final String type;
-  final int playerId;
-  final String playerName;
-  final List<int> newScore;
-  final String? assistStr;
+  String reactKey;
+  int time;
+  int? overloadTime;
+  String type;
+  int playerId;
+  String playerName;
+  List<int> newScore;
+  String? assistStr;
+
 
   GoalEvent({
     required this.reactKey,
     required this.time,
+    this.overloadTime,
     required this.type,
     required this.playerId,
     required this.playerName,
@@ -21,6 +24,7 @@ class GoalEvent {
     return GoalEvent(
       reactKey: json['reactKey'],
       time: json['time'],
+      overloadTime: json['overloadTime'],
       type: json['type'],
       playerId: json['player']['id'],
       playerName: json['player']['name'],

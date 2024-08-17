@@ -4,6 +4,7 @@ import 'package:betgram_app/Controllers/SettingsControllers.dart';
 import 'package:betgram_app/Models/MatchList/ShortInfoFixture.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 import '../../Models/MatchList/ShortInfoTeam.dart';
@@ -60,7 +61,7 @@ class CustomMatchTile extends StatelessWidget {
                 children: [
                   CachedNetworkImage(
                     imageUrl:
-                        "https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}.png",
+                        "${dotenv.env['IMAGE_FLAG_URL_TEAM']}${team.id}.png",
                     width: 20,
                     height: 20,
                     placeholder: (context, url) =>
@@ -93,7 +94,7 @@ class CustomMatchTile extends StatelessWidget {
                   const SizedBox(width: 4),
                   CachedNetworkImage(
                     imageUrl:
-                        "https://images.fotmob.com/image_resources/logo/teamlogo/${team.id}.png",
+                        "${dotenv.env['IMAGE_FLAG_URL_TEAM']}${team.id}.png",
                     width: 25,
                     height: 25,
                     placeholder: (context, url) =>

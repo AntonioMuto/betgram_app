@@ -69,6 +69,16 @@ flutter:
   assets:
   - .env
   - assets/Images/live.gif
+  - assets/Images/goal.png
+  - assets/Images/penalty.png
+  - assets/Images/missed-penalty.png
+  - assets/Images/red-card.png
+  - assets/Images/yellow-card.png
+  - assets/Images/yellow-red-card.png
+  - assets/Images/substitution.png
+  - assets/Images/var.png
+  # - assets/Images/pitchBlack.png
+  - assets/Images/live.gif
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

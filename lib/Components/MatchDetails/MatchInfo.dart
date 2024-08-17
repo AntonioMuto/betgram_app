@@ -1,13 +1,12 @@
-import 'package:betgram_app/Components/MatchDetails/MatchCard.dart';
-import 'package:betgram_app/Controllers/LiveController.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../Controllers/SettingsControllers.dart';
+import '../../Controllers/LiveController.dart';
+import '../../Controllers/MatchInfoController.dart';
 import '../../Models/MatchList/ShortInfoFixture.dart';
 import '../../Utility/TextFacility.dart';
+import 'MatchCard.dart';
 
 class MatchInfo extends StatelessWidget {
   final ShortInfoFixture match;
@@ -15,10 +14,13 @@ class MatchInfo extends StatelessWidget {
 
   final LiveController liveController = Get.find();
   final SettingsController settingController = Get.find();
+  final MatchInfoController matchInfoController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return  Obx((){ return Scaffold(
+    return Obx(() {
+      final cardColor = Get.theme.cardColor;
+      return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -61,8 +63,58 @@ class MatchInfo extends StatelessWidget {
             )
           ],
         ),
-        body: liveController.loadingMatchDetails.value == true ? const Center(child: CircularProgressIndicator(color: Colors.white,)) : MatchCard(match: match)
-    );
-  });
+        body: liveController.loadingMatchDetails.value == true
+            ? const Center(
+                child: CircularProgressIndicator(
+                color: Colors.white,
+              ))
+            : Container(
+              margin: const EdgeInsets.all(10.0), 
+              child: Column(
+                  children: [
+                    MatchCard(match: match),
+                    const SizedBox(height: 10),
+                    Container(
+                      height: kToolbarHeight - 2.0,
+                      decoration: BoxDecoration(
+                        color: cardColor,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: TabBar(
+                        dividerHeight: 0.1,
+                        dividerColor: const Color.fromARGB(0, 76, 175, 79),
+                        tabAlignment: TabAlignment.start,
+                        isScrollable: true,
+                        controller: matchInfoController.tabController,
+                        indicator: const UnderlineTabIndicator(
+                          borderSide: BorderSide(
+                            width: 4,
+                            color: Color.fromARGB(255, 111, 203, 74),
+                          ),
+                        ),
+                        labelColor: Get.theme.primaryColorDark,
+                        unselectedLabelColor: Get.theme.primaryColorDark,
+                        tabs: matchInfoController.tabs,
+                      ),
+                    ),
+                    Container(
+                      height: 8,
+                      decoration: BoxDecoration(
+                      color: Colors.transparent,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    // Aggiungi un Expanded per il contenuto del TabBarView
+                    Expanded(
+                      child: TabBarView(
+                        controller: matchInfoController.tabController,
+                        children: matchInfoController.tabViews,
+                      ),
+                    )
+                  ],
+                ),
+            ),
+      );
+    });
   }
 }

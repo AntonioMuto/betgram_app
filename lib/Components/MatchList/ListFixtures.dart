@@ -2,6 +2,7 @@ import 'package:betgram_app/Components/MatchList/CustomMatchTile.dart';
 import 'package:betgram_app/Utility/TextFacility.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 import '../../Controllers/LiveController.dart';
@@ -54,7 +55,7 @@ class ListFixtures extends StatelessWidget {
                       BorderRadius.circular(8), // Arrotonda l'immagine del logo
                   child: CachedNetworkImage(
                     imageUrl:
-                        "https://images.fotmob.com/image_resources/logo/leaguelogo/dark/${matchList.primaryId}.png",
+                        "${dotenv.env['IMAGE_FLAG_URL']}dark/${matchList.primaryId}.png",
                     width: 25,
                     height: 25,
                     placeholder: (context, url) => CircularProgressIndicator(),

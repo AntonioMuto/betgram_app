@@ -11,4 +11,8 @@ class SettingsController extends GetxController  with GetSingleTickerProviderSta
   toggleDarkMode() {
     settings.value.isDarkMode.value = !settings.value.isDarkMode.value;
   }
+
+  getTheme(){
+    return Get.theme;
+  }
 }

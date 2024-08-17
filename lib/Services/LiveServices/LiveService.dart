@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:betgram_app/Controllers/LiveController.dart';
 import 'package:betgram_app/Controllers/NetworkController.dart';
+import 'package:betgram_app/Models/MatchInfo/Details/FixtureInfoDetails.dart';
 import 'package:betgram_app/Models/MatchInfo/FixtureInfo.dart';
 import 'package:betgram_app/Models/MatchList/MatchList.dart';
 import 'package:betgram_app/Utility/Costants.dart';
@@ -81,6 +82,7 @@ class LiveService {
       if (response.statusCode == 200){
         Map<String, dynamic> jsonMap = jsonDecode(response.body);
         FixtureInfo fixtureInfo = FixtureInfo.fromMap(jsonMap);
+
         _liveController.loadingMatchDetails.value = false;
         return fixtureInfo;
       } else {

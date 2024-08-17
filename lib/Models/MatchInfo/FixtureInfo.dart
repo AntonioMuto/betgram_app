@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:betgram_app/Models/MatchInfo/Header/Highlights.dart';
 
+import 'Details/FixtureInfoDetails.dart';
 import 'Header/HeaderFixture.dart';
 
 class FixtureInfo {
@@ -9,11 +10,13 @@ class FixtureInfo {
   int? matchId;
   Highlights? highlights;
   HeaderFixture? header;
+  FixtureInfoDetails? details;
 
   FixtureInfo({
     this.matchId,
     this.highlights,
-    this.header
+    this.header,
+    this.details
   });
 
   Map<String, dynamic> toMap() {
@@ -21,6 +24,7 @@ class FixtureInfo {
       'matchId': matchId,
       'highlights': highlights?.toMap(),
       'header': header?.toMap(),
+      'details': details?.toMap(),
     };
   }
   
@@ -29,6 +33,7 @@ class FixtureInfo {
       matchId: map['matchId'] as int,
       highlights: map['highlights'] == null ? null : Highlights.fromMap(map['highlights']),
       header: map['header']== null ? null : HeaderFixture.fromMap(map['header']),
+      details: FixtureInfoDetails.fromMap(map),
     );
   }
 

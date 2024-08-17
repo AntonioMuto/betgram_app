@@ -1,5 +1,7 @@
 import 'package:betgram_app/Components/Home/HomePage.dart';
+import 'package:betgram_app/Components/MatchDetails/MatchInfo.dart';
 import 'package:betgram_app/Controllers/LiveController.dart';
+import 'package:betgram_app/Controllers/MatchInfoController.dart';
 import 'package:betgram_app/Controllers/NetworkController.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -15,6 +17,7 @@ Future<void> main() async {
   Get.put(NetworkController());
   Get.put(HomeController());
   Get.put(LiveController());
+  Get.put(MatchInfoController());
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
