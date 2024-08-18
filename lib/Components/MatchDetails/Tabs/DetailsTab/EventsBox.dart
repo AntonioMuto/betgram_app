@@ -1,4 +1,5 @@
 import 'package:betgram_app/Controllers/LiveController.dart';
+import 'package:betgram_app/Controllers/SettingsControllers.dart';
 import 'package:betgram_app/Models/MatchInfo/Details/FixtureEvent.dart';
 import 'package:betgram_app/Utility/Costants.dart';
 import 'package:betgram_app/Utility/TextFacility.dart';
@@ -9,10 +10,11 @@ import 'package:get/get.dart';
 class EventBox extends StatelessWidget {
   EventBox({super.key});
   final LiveController _liveController = Get.find();
-
+  final SettingsController _settingsController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Obx(() {
+      var cardColor = _settingsController.theme.value.cardColor;
       var events = _liveController.matchDetails.value.details?.events ?? [];
       _liveController.matchDetails.value.details?.events?.forEach((element) {});
       return Column(
@@ -21,7 +23,7 @@ class EventBox extends StatelessWidget {
             child: Container(
                 width: Get.width,
                 decoration: BoxDecoration(
-                    color: Get.theme.cardColor,
+                    color: cardColor,
                     borderRadius: const BorderRadius.all(Radius.circular(6))),
                 child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
@@ -115,10 +117,10 @@ class EventBox extends StatelessWidget {
     return event.overloadTime != null && event.overloadTime! > 0
         ? Text("${event.time}' + ${event.overloadTime}'",
             style: const TextStyle(
-                color: Color.fromARGB(255, 164, 163, 163), fontSize: 11))
+                color: Color.fromARGB(255, 113, 113, 113), fontSize: 11))
         : Text("${event.time}'",
             style: const TextStyle(
-                color: Color.fromARGB(255, 164, 163, 163), fontSize: 14));
+                color: Color.fromARGB(255, 113, 113, 113), fontSize: 14));
   }
 
   Image _retrieveImageTypeEvent(FixtureEvent? event) {
@@ -150,18 +152,18 @@ class EventBox extends StatelessWidget {
             'assets/Images/goal.png',
             width: 35,
             height: 35,
-            color: Colors.white,
+            color: _settingsController.settings.value.isDarkMode == true ? Colors.white : Colors.black,
           );
         }
       case "Substitution":
         return Image.asset('assets/Images/substitution.png',
             width: 33, height: 33);
       case "MissedPenalty":
-          return Image.asset(
-            'assets/Images/missed-penalty.png',
-            width: 35,
-            height: 35,
-          );
+        return Image.asset(
+          'assets/Images/missed-penalty.png',
+          width: 35,
+          height: 35,
+        );
       case "Card":
         if (event?.card == "Yellow") {
           return Image.asset(
@@ -201,7 +203,7 @@ class EventBox extends StatelessWidget {
             children: [
               Text(
                 "${event.subsitutionPlayerNameIN}",
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: _settingsController.theme.value.primaryColorDark),
               ),
               Text(event.subsitutionPlayerNameOUT ?? "",
                   style: const TextStyle(
@@ -214,7 +216,7 @@ class EventBox extends StatelessWidget {
             children: [
               Text(
                 "${event.playerName}",
-                style: TextStyle(color: Get.theme.primaryColorDark),
+                style: TextStyle(color: _settingsController.theme.value.primaryColorDark),
               ),
               if (event.assistInput != null)
                 Text(event.assistInput ?? "",
@@ -242,11 +244,13 @@ class EventBox extends StatelessWidget {
             Container(
               height: 17,
               width: Get.width - 80,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 114, 114, 114),
                 borderRadius: BorderRadius.all(Radius.circular(6)),
               ),
-              child: Center(child: Text(event?.halfStrShort ?? "", style: TextFacility.getBoldStyleText(13))),
+              child: Center(
+                  child: Text(event?.halfStrShort ?? "",
+                      style: TextFacility.getBoldStyleTextWhite(13))),
             ),
           ],
         ),

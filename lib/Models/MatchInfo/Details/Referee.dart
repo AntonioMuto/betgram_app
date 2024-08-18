@@ -11,9 +11,9 @@ class Referee {
 
   factory Referee.fromMap(Map<String, dynamic> map) {
     return Referee(
-      name: map['name'],
+      name: map['text'],
       country: map['country'],
-      imageUrl: map['imageUrl'],
+      imageUrl: map['imgUrl'],
     );
   }
 
@@ -21,7 +21,7 @@ class Referee {
     return <String, dynamic>{
       'name': name,
       'country': country,
-      'imageUrl': imageUrl
+      'imgUrl': imageUrl
     };
   }
 

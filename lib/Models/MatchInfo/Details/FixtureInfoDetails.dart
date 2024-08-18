@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'FixtureEvent.dart';
+import 'Referee.dart';
 import 'Stadium.dart';
 import 'TeamForm.dart';
 
@@ -10,10 +11,11 @@ class FixtureInfoDetails{
   String? leagueName;
   String? round;
   String? selectedSeason;
+  Referee? referee;
   Stadium? stadium;
   TeamForm? teamForm;
 
-  FixtureInfoDetails({this.events, this.leagueId, this.leagueName, this.round, this.selectedSeason, this.stadium, this.teamForm});
+  FixtureInfoDetails({this.events, this.leagueId, this.leagueName, this.round, this.selectedSeason, this.referee, this.stadium, this.teamForm});
 
   factory FixtureInfoDetails.fromMap(Map<String, dynamic> map) {
     FixtureInfoDetails x = FixtureInfoDetails(
@@ -22,7 +24,8 @@ class FixtureInfoDetails{
     leagueName: map['infoBox']['Tournament']['leagueName'],
     round: map['infoBox']['Tournament']['round'],
     selectedSeason: map['infoBox']['Tournament']['selectedSeason'],
-    stadium: map['stadium'] != null ? Stadium.fromMap(map['stadium']) : null,
+    referee: map['infoBox']['Referee'] != null ? Referee.fromMap(map['infoBox']['Referee']) : null,
+    stadium: map['infoBox']['Stadium'] != null ? Stadium.fromMap(map['infoBox']['Stadium']) : null,
     teamForm: map['teamForm'] != null ? TeamForm.fromMap(map['teamForm']) : null,
     );
     return x;
@@ -35,6 +38,7 @@ class FixtureInfoDetails{
       'leagueName': leagueName,
       'round': round,
       'selectedSeason': selectedSeason,
+      'referee': referee?.toMap(),
       'stadium': stadium?.toMap(),
       'teamForm': teamForm
     };
