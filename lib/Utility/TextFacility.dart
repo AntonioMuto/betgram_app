@@ -9,7 +9,16 @@ class TextFacility {
   
   static TextStyle getBoldStyleText(double size) {
     return TextStyle(
-        color: Get.theme.primaryColorDark,
+        color: settingsController.theme.value.primaryColorDark,
+        fontSize: size,
+        fontWeight: FontWeight.bold,
+        fontFamily: "Poppins",
+        decoration: TextDecoration.none);
+  }
+
+  static TextStyle getBoldStyleTextNotDark(double size) {
+    return TextStyle(
+        color: settingsController.theme.value.primaryColorDark,
         fontSize: size,
         fontWeight: FontWeight.bold,
         fontFamily: "Poppins",

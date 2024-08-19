@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class FixtureRecapForm {
-  
+  int? id;
   int? result;
   String? resultString;
   String? data;
@@ -11,28 +11,29 @@ class FixtureRecapForm {
   String? awayTeamId;
   String? awayTeamName;
 
-  FixtureRecapForm({
-    this.result,
-    this.resultString,
-    this.data,
-    this.score,
-    this.homeTeamId,
-    this.homeTeamName,
-    this.awayTeamId,
-    this.awayTeamName
-  });
+  FixtureRecapForm(
+      {this.id,
+      this.result,
+      this.resultString,
+      this.data,
+      this.score,
+      this.homeTeamId,
+      this.homeTeamName,
+      this.awayTeamId,
+      this.awayTeamName});
 
   factory FixtureRecapForm.fromMap(Map<String, dynamic> map) {
-      return FixtureRecapForm(
-        result: map['result'],
-        resultString: map['resultString'],
-        data: map['date']['utcTime'],
-        score: map['score'],
-        homeTeamId: map['home']['id'],
-        homeTeamName: map['home']['name'],
-        awayTeamId: map['away']['id'],
-        awayTeamName: map['away']['name'],
-      );
+    return FixtureRecapForm(
+      id: _takeId(map['linkToMatch']) ?? -1,
+      result: map['result'],
+      resultString: map['resultString'],
+      data: map['date']['utcTime'],
+      score: map['score'],
+      homeTeamId: map['home']['id'],
+      homeTeamName: map['home']['name'],
+      awayTeamId: map['away']['id'],
+      awayTeamName: map['away']['name'],
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -50,6 +51,18 @@ class FixtureRecapForm {
 
   String toJson() => json.encode(toMap());
 
-  factory FixtureRecapForm.fromJson(String source) => FixtureRecapForm.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory FixtureRecapForm.fromJson(String source) =>
+      FixtureRecapForm.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  static _takeId(String link) {
+    RegExp regExp = RegExp(r'#(\d+)$');
+    Match? match = regExp.firstMatch(link);
+
+    if (match != null) {
+      String numbers = match.group(1)!;
+      return int.tryParse(numbers);
+    } else {
+      return -1;
+    }
+  }
 }
