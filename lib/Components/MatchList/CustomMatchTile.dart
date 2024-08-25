@@ -28,7 +28,14 @@ class CustomMatchTile extends StatelessWidget {
       return GestureDetector(
         onTap: () async {
           Get.to(() => MatchInfo(match: match));
-          await liveController.setMatchDetails(match.id);
+          if(match.status?.ongoing == true){
+            liveController.setLoadingLiveFirstMatch(true);
+            await liveController.retrieveMatchDetailsLive(match.id);
+            liveController.setLoadingLiveFirstMatch(false);
+            liveController.startTimerMatchDetails(match.id);
+          } else {
+            await liveController.setMatchDetails(match.id);
+          }
         },
         child: Card(
           color: cardColor,

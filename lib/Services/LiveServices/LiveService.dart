@@ -41,6 +41,31 @@ class LiveService {
     }
   }
 
+  static Future<FixtureInfo> retrieveLiveMatchDetails(int matchId) async {
+    try {
+      http.Response response = await http.get(
+          Uri.parse('${_networkController.apiUrl}/live/retrieveMatch/$matchId'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ${dotenv.env['TOKEN']}'
+          });
+      if (response.statusCode == 200){
+        Map<String, dynamic> jsonMap = jsonDecode(response.body);
+        FixtureInfo fixtureInfo = FixtureInfo.fromMap(jsonMap);
+
+        _liveController.loadingMatchDetails.value = false;
+        return fixtureInfo;
+      } else {
+        _liveController.loadingMatchDetails.value = false;
+        Get.snackbar("ERROR ${response.statusCode}", "errore nel recupero dei dati", animationDuration: const Duration(seconds: 3), icon: const Icon(Icons.error_outline, color: Colors.white),backgroundColor: const Color.fromARGB(255, 226, 86, 76) );
+        return FixtureInfo();
+      }
+    } catch (e) {
+      _liveController.loadingMatchDetails.value = false;
+      return FixtureInfo();
+    }
+  }
+
   static Future<List<MatchList>> retrieveMatchByDay(DateTime selectedDay) async {
     try {
       _liveController.loadingMatchList.value = true;

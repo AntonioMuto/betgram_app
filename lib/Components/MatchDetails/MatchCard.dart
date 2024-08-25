@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:betgram_app/Utility/Costants.dart';
+import 'package:betgram_app/Utility/TextFacility.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../Controllers/LiveController.dart';
+import '../../Models/MatchInfo/Header/GoalEvent.dart';
 import '../../Models/MatchList/ShortInfoFixture.dart';
 
 class MatchCard extends StatelessWidget {
@@ -76,6 +80,7 @@ class MatchCard extends StatelessWidget {
   return Container(
     width: Get.width * 0.30,
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CachedNetworkImage(
           imageUrl: flagUrl,
@@ -96,7 +101,7 @@ class MatchCard extends StatelessWidget {
         ),
         // Avvolgi ListView.builder in un widget che limita la sua altezza
         Container(
-          height: (_liveController.matchDetails.value.header?.events?.homeTeamGoals.length.toDouble() ?? 0) * 20.0,  // Imposta un'altezza fissa per il ListView
+          height: (_retrieveMaxEventsTeam() ?? 0) * 20.0,  // Imposta un'altezza fissa per il ListView
           child: ListView.builder(
             itemCount: isHome
                 ? _liveController.matchDetails.value.header?.events?.homeTeamGoals.length
@@ -105,8 +110,9 @@ class MatchCard extends StatelessWidget {
               var events = isHome
                   ? _liveController.matchDetails.value.header?.events?.homeTeamGoals
                   : _liveController.matchDetails.value.header?.events?.awayTeamGoals;
-              final event = events?[index];
-              return Text(event?.toString() ?? "CIAO", textAlign: TextAlign.center);
+              String key = events!.keys.elementAt(index);
+              final event = events[key];
+              return Text(_retrieveValueGoal(event), style: TextFacility.getBoldStyleSubText(10), textAlign: TextAlign.center);
             },
           ),
         )
@@ -114,4 +120,31 @@ class MatchCard extends StatelessWidget {
     ),
   );
 }
+
+  String _retrieveValueGoal(List<GoalEvent>? events) {
+  if (events != null && events.isNotEmpty) {
+    // Se c'è un solo evento, restituisci la stringa "name, time"
+    if (events.length == 1) {
+      final goal = events.first;
+      return "${goal.playerName}, ${goal.time}";
+    } 
+    
+    // Se ci sono più eventi, concatenare i tempi in una stringa
+    else {
+      final goal = events.first; // prendi il primo evento per il nome
+      final times = events.map((event) => event.time).join(" ");
+      return "${goal.playerName}, $times";
+    }
+  }
+  
+  // Restituisce una stringa vuota se l'elenco degli eventi è nullo o vuoto
+  return "";
+}
+
+  _retrieveMaxEventsTeam() {
+    double awayGoalsLength = _liveController.matchDetails.value.header?.events?.awayTeamGoals?.length.toDouble() ?? 0.0;
+    double homeGoalsLength = _liveController.matchDetails.value.header?.events?.homeTeamGoals?.length.toDouble() ?? 0.0;
+    return max(awayGoalsLength, homeGoalsLength);
+  }
+
 }

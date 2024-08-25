@@ -32,6 +32,9 @@ class MatchInfo extends StatelessWidget {
               color: Get.theme.primaryColorDark,
             ),
             onPressed: () {
+              liveController.stopTimerMatchDetails();
+              liveController.startTimer();
+              liveController.retrieveLiveMatchListData();
               Get.back();
             },
           ),
@@ -63,13 +66,13 @@ class MatchInfo extends StatelessWidget {
             )
           ],
         ),
-        body: liveController.loadingMatchDetails.value == true
+        body: liveController.loadingMatchDetails.value == true || liveController.loadingMatchFirstLiveDetails.value == true
             ? const Center(
                 child: CircularProgressIndicator(
                 color: Colors.white,
               ))
             : Container(
-              margin: const EdgeInsets.all(10.0), 
+              margin: const EdgeInsets.only(left: 10.0, right: 10.0), 
               child: Column(
                   children: [
                     MatchCard(match: match),

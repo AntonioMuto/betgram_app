@@ -29,11 +29,15 @@ class FixtureInfo {
   }
   
   factory FixtureInfo.fromMap(Map<String, dynamic> map) {
+    var mapLiveDetails = map;
+    if(map['content'] != null){
+      mapLiveDetails = map['content']['matchFacts'];
+    }
     return FixtureInfo(
-      matchId: map['matchId'] as int,
+      matchId: mapLiveDetails['matchId'] as int,
       highlights: map['highlights'] == null ? null : Highlights.fromMap(map['highlights']),
       header: map['header']== null ? null : HeaderFixture.fromMap(map['header']),
-      details: FixtureInfoDetails.fromMap(map),
+      details: FixtureInfoDetails.fromMap(mapLiveDetails),
     );
   }
 

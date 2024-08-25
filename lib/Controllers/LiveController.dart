@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:betgram_app/Controllers/MatchInfoController.dart';
 import 'package:betgram_app/Models/MatchInfo/FixtureInfo.dart';
 import 'package:betgram_app/Models/MatchList/MatchList.dart';
 import 'package:get/get.dart';
@@ -13,8 +14,12 @@ class LiveController extends GetxController {
   //LOADING FLAG
   var loadingMatchList = false.obs;
   var loadingMatchDetails = false.obs;
+  var loadingMatchFirstLiveDetails = false.obs;
   
   Timer? _timer;
+  Timer? _timerMatchDetails;
+
+  MatchInfoController matchInfoController = Get.find();
 
   @override
   void onInit() {
@@ -22,7 +27,7 @@ class LiveController extends GetxController {
     // Inizia a recuperare i dati inizialmente
     retrieveLiveMatchList();
     // Configura il Timer per eseguire la funzione ogni 15 secondi
-    _startTimer();
+    startTimer();
   }
 
   @override
@@ -35,13 +40,24 @@ class LiveController extends GetxController {
   Future<void> retrieveLiveMatchList() async {
     try {
       print("updateLive");
-      _startTimer();
+      startTimer();
+      await retrieveLiveMatchListData();
+    } catch (e) {
+      // Gestisci eventuali errori qui
+      print('Errore durante il recupero dei dati: $e');
+    }
+  }
+
+  Future<void> retrieveLiveMatchListData() async {
+    try {
       matchesByDay.value = await LiveService.retrieveMatchDay();
     } catch (e) {
       // Gestisci eventuali errori qui
       print('Errore durante il recupero dei dati: $e');
     }
   }
+
+
 
   Future<void> retrieveLiveMatchListByDay(DateTime selectedDay) async {
     try {
@@ -54,7 +70,7 @@ class LiveController extends GetxController {
     }
   }
 
-  void _startTimer() {
+  void startTimer() {
     // Assicurati che un timer non sia già in esecuzione
     _stopTimer();
     _timer = Timer.periodic(Duration(seconds: 15), (timer) {
@@ -67,8 +83,36 @@ class LiveController extends GetxController {
     _timer = null; // Imposta il timer su null per evitare riferimenti successivi
   }
 
+  void startTimerMatchDetails(int id) {
+    // Assicurati che un timer non sia già in esecuzione
+    stopTimerMatchDetails();
+    _stopTimer();
+    _timerMatchDetails = Timer.periodic(Duration(seconds: 15), (timer) {
+      retrieveMatchDetailsLive(id);
+    });
+  }
+
+  void stopTimerMatchDetails() {
+    _timerMatchDetails?.cancel();
+    _timerMatchDetails = null; // Imposta il timer su null per evitare riferimenti successivi
+  }
+
   Future<void> setMatchDetails(int id) async {
+    _stopTimer();
+    await retrieveMatchDetails(id);
+    matchInfoController.matchId.value = id;
+  }
+
+  Future<void> retrieveMatchDetails(int id) async {
     matchDetails.value = await LiveService.retrieveMatchDetails(id);
+  }
+
+  Future<void> retrieveMatchDetailsLive(int id) async {
+    matchDetails.value = await LiveService.retrieveLiveMatchDetails(id);
+  }
+
+  void setLoadingLiveFirstMatch(bool value) {
+    loadingMatchFirstLiveDetails.value = value;
   }
 
 

@@ -15,9 +15,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   Get.put(NetworkController());
+  Get.put(MatchInfoController());
   Get.put(HomeController());
   Get.put(LiveController());
-  Get.put(MatchInfoController());
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
