@@ -33,9 +33,12 @@ class MatchInfo extends StatelessWidget {
             ),
             onPressed: () {
               liveController.stopTimerMatchDetails();
-              liveController.startTimer();
-              liveController.retrieveLiveMatchListData();
+              if(liveController.isSameDay(liveController.daySelected.value, DateTime.now())){
+                liveController.retrieveLiveMatchListData();
+              }
               Get.back();
+              liveController.startTimer();
+              matchInfoController.reset();
             },
           ),
           title: Text(

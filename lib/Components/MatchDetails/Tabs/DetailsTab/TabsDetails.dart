@@ -3,12 +3,9 @@ import 'package:betgram_app/Components/MatchDetails/Tabs/DetailsTab/RefereeBox.d
 import 'package:betgram_app/Components/MatchDetails/Tabs/DetailsTab/StadiumBox.dart';
 import 'package:betgram_app/Controllers/SettingsControllers.dart';
 import 'package:betgram_app/Models/MatchInfo/Header/HeaderInfoTeam.dart';
-import 'package:betgram_app/Utility/CardUtility.dart';
 import 'package:betgram_app/Utility/Costants.dart';
-import 'package:betgram_app/Utility/TextFacility.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
@@ -29,18 +26,18 @@ class TabsDetails extends StatelessWidget {
         child: Column(
           children: [
             Container(
-                margin: EdgeInsets.only(top: 20),
-                padding: EdgeInsets.all(10),
+                margin: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.all(10),
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                   color: cardColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: Get.theme.primaryColorDark.withOpacity(0.1),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 2), // Offset della ombra
+                      offset: const Offset(0, 2), // Offset della ombra
                     ),
                   ],
                 ),
@@ -52,9 +49,9 @@ class TabsDetails extends StatelessWidget {
                       width: 25,
                       height: 25,
                       placeholder: (context, url) =>
-                          CircularProgressIndicator(),
+                          const CircularProgressIndicator(),
                       errorWidget: (context, url, error) =>
-                          Icon(Icons.error, size: 40),
+                          const Icon(Icons.error, size: 40),
                     ),
                     const SizedBox(width: 10),
                     Text(
@@ -71,42 +68,42 @@ class TabsDetails extends StatelessWidget {
                 )),
             if(_liveController.matchDetails.value.details?.events?.isNotEmpty ?? false)
             Container(
-                margin: EdgeInsets.only(top: 20),
-                padding: EdgeInsets.all(10),
+                margin: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.all(10),
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                   color: cardColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: Get.theme.primaryColorDark.withOpacity(0.1),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 2), // Offset della ombra
+                      offset: const Offset(0, 2), // Offset della ombra
                     ),
                   ],
                 ),
                 child: EventBox()),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             IntrinsicHeight(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   if(_liveController.matchDetails.value.details?.stadium?.name != null)
                   Container(
-                      margin: EdgeInsets.only(top: 20),
-                      padding: EdgeInsets.all(10),
+                      margin: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.all(10),
                       width: Get.width - 200,
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                         color: cardColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
                         boxShadow: [
                           BoxShadow(
                             color: Get.theme.primaryColorDark.withOpacity(0.1),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 2), // Offset della ombra
+                            offset: const Offset(0, 2), // Offset della ombra
                           ),
                         ],
                       ),
@@ -114,19 +111,19 @@ class TabsDetails extends StatelessWidget {
                   const SizedBox(width: 8),
                   if(_liveController.matchDetails.value.details?.referee?.name != null)
                   Container(
-                      margin: EdgeInsets.only(top: 20),
-                      padding: EdgeInsets.all(10),
+                      margin: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.all(10),
                       width: Get.width * 0.40,
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                         color: cardColor,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
                         boxShadow: [
                           BoxShadow(
                             color: Get.theme.primaryColorDark.withOpacity(0.1),
                             spreadRadius: 1,
                             blurRadius: 3,
-                            offset: Offset(0, 2), // Offset della ombra
+                            offset: const Offset(0, 2), // Offset della ombra
                           ),
                         ],
                       ),
@@ -137,18 +134,18 @@ class TabsDetails extends StatelessWidget {
             ),
             if(_liveController.matchDetails.value.details?.teamForm?.fixtureHome != null )
             Container(
-                margin: EdgeInsets.only(top: 20),
-                padding: EdgeInsets.all(10),
+                margin: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.all(10),
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                   color: cardColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: Get.theme.primaryColorDark.withOpacity(0.1),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 2), // Offset della ombra
+                      offset: const Offset(0, 2), // Offset della ombra
                     ),
                   ],
                 ),
@@ -161,18 +158,18 @@ class TabsDetails extends StatelessWidget {
                             imageUrl: Costants.URL_NA_IMAGE), isHome: true))),
             if(_liveController.matchDetails.value.details?.teamForm?.fixtureAway != null )
             Container(
-                margin: EdgeInsets.only(top: 20),
-                padding: EdgeInsets.all(10),
+                margin: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.all(10),
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                   color: cardColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
                   boxShadow: [
                     BoxShadow(
                       color: Get.theme.primaryColorDark.withOpacity(0.1),
                       spreadRadius: 1,
                       blurRadius: 3,
-                      offset: Offset(0, 2), // Offset della ombra
+                      offset: const Offset(0, 2), // Offset della ombra
                     ),
                   ],
                 ),

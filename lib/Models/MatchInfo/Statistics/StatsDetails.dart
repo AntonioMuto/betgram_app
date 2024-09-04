@@ -16,9 +16,9 @@ class StatsDetails {
 
   factory StatsDetails.fromMap(Map<String, dynamic> map) {
     return StatsDetails(
-    all: map['Periods']['All']['stats'][0] != null ? (map['Periods']['All']['stats'][0] as List).map((x) => Statistics.fromMap(x)).toList() : [],
-    firstHalf: map['Periods']['FirstHalf']['stats'][0] != null ? (map['Periods']['FirstHalf']['stats'][0] as List).map((x) => Statistics.fromMap(x)).toList() : [],
-    secondHalf: map['Periods']['SecondHalf']['stats'][0] != null ? (map['Periods']['SecondHalf']['stats'][0] as List).map((x) => Statistics.fromMap(x)).toList() : [],
+    all: map['Periods']['All']['stats'][0]['stats'] != null ? (map['Periods']['All']['stats'][0]['stats'] as List).map((x) => Statistics.fromMap(x)).toList() : [],
+    firstHalf: map['Periods']['FirstHalf']['stats'][0]['stats'] != null ? (map['Periods']['FirstHalf']['stats'][0]['stats'] as List).map((x) => Statistics.fromMap(x)).toList() : [],
+    secondHalf: map['Periods']['SecondHalf']['stats'][0]['stats'] != null ? (map['Periods']['SecondHalf']['stats'][0]['stats'] as List).map((x) => Statistics.fromMap(x)).toList() : [],
     );
   }
 

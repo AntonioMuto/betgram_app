@@ -15,6 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   Get.put(NetworkController());
+  Get.put(SettingsController());
   Get.put(MatchInfoController());
   Get.put(HomeController());
   Get.put(LiveController());

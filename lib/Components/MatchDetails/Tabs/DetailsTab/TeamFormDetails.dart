@@ -74,27 +74,25 @@ class TeamFormDetails extends StatelessWidget {
               ],
             ),
             children: fixtures?.map((match) {
-                  return Container(
-                    child: GestureDetector(
-                      onTap: () async {
-                        await _liveController.setMatchDetails(match.id ?? 0);
-                      },
-                      child: Card(
-                        color: cardColor,
-                        child: Padding(
-                            padding: const EdgeInsets.only(left: 4, right: 4),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                _buildTeamInfo(match.homeTeamId ?? "",
-                                    match.homeTeamName ?? "", true),
-                                _buildScore(match.score ?? "",
-                                    match.resultString ?? ""),
-                                _buildTeamInfo(match.awayTeamId ?? "",
-                                    match.awayTeamName ?? "", false),
-                              ],
-                            )),
-                      ),
+                  return GestureDetector(
+                    onTap: () async {
+                      await _liveController.setMatchDetails(match.id ?? 0);
+                    },
+                    child: Card(
+                      color: cardColor,
+                      child: Padding(
+                          padding: const EdgeInsets.only(left: 4, right: 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _buildTeamInfo(match.homeTeamId ?? "",
+                                  match.homeTeamName ?? "", true),
+                              _buildScore(match.score ?? "",
+                                  match.resultString ?? ""),
+                              _buildTeamInfo(match.awayTeamId ?? "",
+                                  match.awayTeamName ?? "", false),
+                            ],
+                          )),
                     ),
                   );
                 }).toList() ??

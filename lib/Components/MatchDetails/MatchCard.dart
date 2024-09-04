@@ -49,7 +49,7 @@ class MatchCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    header?.status?.short ?? "CIAO",
+                    header?.status?.short ?? "-", 
                     style: TextStyle(
                       color: header?.status?.ongoing == true
                           ? Colors.red
