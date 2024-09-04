@@ -28,7 +28,7 @@ class TabStatistics extends StatelessWidget {
       } else if(matchInfoController.statsFilter.value == 2) {
         stats = matchInfoController.statistics.value.secondHalf;
       }
-      return matchInfoController.loadingStats.value ? const Loading() : Column(
+      return (matchInfoController.loadingStats.value && matchInfoController.statistics.value.all != null) ? const Loading() : Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
